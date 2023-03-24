@@ -43,11 +43,12 @@ public class ThreadBilheteria extends Thread {
     //Comprando Ingresso
 	public void Comprar() {
 		Random random = new Random();
-		int tempoCompra = random.nextInt(1, 4);
-		if(qtdeIngressos > 1) {
+		double tempoCompra = random.nextInt(1, 4);
+		if(qtdeIngressos > 1 && tempoCompra < 2.5) {
 			System.out.println(pessoa+" "+numPessoa+" Comprando Ingresso(s)...");
-		}else {
-			System.out.println(pessoa+" "+numPessoa+" Ingressos Indisponíveis");
+		}else if(tempoCompra > 2.5){
+			System.out.println(pessoa+" "+numPessoa+" Tempo de Compra Esgotado");
+			FimCompra();
 		}
 	}
 	//Validando Qtde de Ingressos 
@@ -73,5 +74,17 @@ public class ThreadBilheteria extends Thread {
 			Login();
 		}
 	}
+	//Caso a pessoa não consiga efetuar a compra
+	public void FimCompra() {
+		System.out.println(pessoa+" "+numPessoa+" Não foi possível efetuar a compra. Tente Novamente");
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}finally {
+			Login();
+		}
+	}
+	
 	
 }
